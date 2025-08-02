@@ -1,3 +1,4 @@
+st.image("https://github.com/nilo999/Updated-translator/blob/f4ebe425c2b07109a4a56025960de5af3118e7d3/DLLOGO.png", width=120)
 import streamlit as st
 from deep_translator import GoogleTranslator
 import urllib.parse
