@@ -74,9 +74,7 @@ if st.button("Translate"):
         original_notice = f"\n\n*_(Original text: {input_text.strip()})_*"
         full_email_body += original_notice
 
-        # Prepare mailto link with subject and body, including logo at the top in the email body as a URL image markdown
-        email_logo_markdown = "![Logo](https://raw.githubusercontent.com/nilo999/Updated-translator/main/DLLOGO.png)\n\n"
-        email_body_with_logo = email_logo_markdown + full_email_body
+
 
         subject = urllib.parse.quote("Multilingual Translation")
         body = urllib.parse.quote(email_body_with_logo)
