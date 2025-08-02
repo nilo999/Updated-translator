@@ -88,7 +88,7 @@ if st.button("Translate"):
                     padding: 10px 20px;
                     text-decoration: none;
                     border-radius: 5px;
-                ">📧 Send Translations by Email</a>
+                ">📧 Send by Email</a>
             </div>
         """, unsafe_allow_html=True)
 
