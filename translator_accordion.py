@@ -79,4 +79,4 @@ if st.button("Translate"):
 
         for lang, lang_name in LANG_CODES.items():
             with st.expander(f"{FLAGS[lang]} {lang}"):
-                translated = translate(
+                translated = translate()
