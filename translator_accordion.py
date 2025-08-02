@@ -47,7 +47,7 @@ def translate(text, lang_code):
 st.set_page_config(page_title="People Team Translator", page_icon="🧑‍💼")
 
 # App UI
-st.title("People Team Translator")
+st.title("🌍 4-Language Translator")
 
 input_text = st.text_area("✏️ Enter your English text here:", height=200)
 
