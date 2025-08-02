@@ -2,10 +2,10 @@ import streamlit as st
 from deep_translator import GoogleTranslator
 import urllib.parse
 
-# Set page config first
+# Set page config BEFORE anything else
 st.set_page_config(page_title="🌍 4-Language Translator", layout="centered")
 
-# Centered logo
+# Centered logo at top
 st.markdown(
     """
     <div style="text-align: center;">
@@ -17,58 +17,39 @@ st.markdown(
 
 st.title("🌍 4-Language Translator")
 
-FLAGS = {
-    'ES': '🇪🇸',
-    'FR': '🇫🇷🇧🇪🇨🇭',  # France + Belgium + Switzerland
-    'NL': '🇳🇱🇧🇪',
-    'IT': '🇮🇹🇨🇭'       # Italy + Switzerland
-}
-
-LANG_CODES = {
-    'ES': 'spanish',
-    'FR': 'french',
-    'NL': 'dutch',
-    'IT': 'italian'
-}
-
+# Updated flags
+FLAGS = {'ES': '🇪🇸', 'FR': '🇫🇷🇧🇪🇨🇭', 'NL': '🇳🇱🇧🇪', 'IT': '🇮🇹🇨🇭'}
+LANG_CODES = {'ES': 'spanish', 'FR': 'french', 'NL': 'dutch', 'IT': 'italian'}
 NOTICE_EN = (
-    "Translated by Artificial Intelligence. in case of doubt, please refer to the English version of this text, "
+    "machine translated. in case of doubt, please refer to the english version of this text, "
     "or get in contact with the People Team."
 )
 
+# Smart translation function that protects “People Team”
 def translate(text, lang_code):
     protected = "People Team"
-    
-    # Split the text around the protected phrase
-    parts = text.split(protected)
-    translated_parts = []
+    if protected in text:
+        segments = text.split(protected)
+        translated_segments = []
+        for segment in segments:
+            translated = GoogleTranslator(source='auto', target=lang_code).translate(segment) if segment.strip() else ""
+            translated_segments.append(translated)
+        translated_main = f" {protected} ".join(translated_segments)
+    else:
+        translated_main = GoogleTranslator(source='auto', target=lang_code).translate(text)
 
-    for part in parts:
-        if part.strip() == "":
-            translated_parts.append("")  # keep empty if it's just before/after protected
-        else:
-            translated = GoogleTranslator(source='auto', target=lang_code).translate(part)
-            translated_parts.append(translated)
-
-    # Reassemble the sentence, keeping 'People Team' untouched
-    translated_main = f" {protected} ".join(translated_parts)
-
-    # Handle the notice in the same way
-    notice_parts = NOTICE_EN.split(protected)
-    translated_notice_parts = []
-    for part in notice_parts:
-        if part.strip() == "":
-            translated_notice_parts.append("")
-        else:
-            translated_notice_parts.append(
-                GoogleTranslator(source='auto', target=lang_code).translate(part)
-            )
-
-    translated_notice = f" {protected} ".join(translated_notice_parts)
+    # Now for the notice
+    if protected in NOTICE_EN:
+        parts = NOTICE_EN.split(protected)
+        translated_notice = f" {protected} ".join(
+            GoogleTranslator(source='auto', target=lang_code).translate(part) if part.strip() else "" for part in parts
+        )
+    else:
+        translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(NOTICE_EN)
 
     return translated_main.strip() + "\n\n*_" + translated_notice.strip() + "_*"
 
-
+# UI
 input_text = st.text_area("✏️ Enter your English text here:", height=200)
 
 if st.button("Translate"):
