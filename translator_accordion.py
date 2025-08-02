@@ -28,26 +28,35 @@ NOTICE_EN = (
 # Smart translation function that protects “People Team”
 def translate(text, lang_code):
     protected = "People Team"
+
+    # -- Main Text --
     if protected in text:
-        segments = text.split(protected)
-        translated_segments = []
-        for segment in segments:
-            translated = GoogleTranslator(source='auto', target=lang_code).translate(segment) if segment.strip() else ""
-            translated_segments.append(translated)
-        translated_main = f" {protected} ".join(translated_segments)
+        parts = text.split(protected)
+        translated_parts = []
+        for part in parts:
+            if part.strip():
+                translated_parts.append(GoogleTranslator(source='auto', target=lang_code).translate(part))
+            else:
+                translated_parts.append("")
+        translated_main = f" {protected} ".join(translated_parts)
     else:
         translated_main = GoogleTranslator(source='auto', target=lang_code).translate(text)
 
-    # Now for the notice
+    # -- Notice Text --
     if protected in NOTICE_EN:
-        parts = NOTICE_EN.split(protected)
-        translated_notice = f" {protected} ".join(
-            GoogleTranslator(source='auto', target=lang_code).translate(part) if part.strip() else "" for part in parts
-        )
+        notice_parts = NOTICE_EN.split(protected)
+        translated_notice_parts = []
+        for part in notice_parts:
+            if part.strip():
+                translated_notice_parts.append(GoogleTranslator(source='auto', target=lang_code).translate(part))
+            else:
+                translated_notice_parts.append("")
+        translated_notice = f" {protected} ".join(translated_notice_parts)
     else:
         translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(NOTICE_EN)
 
     return translated_main.strip() + "\n\n*_" + translated_notice.strip() + "_*"
+
 
 # UI
 input_text = st.text_area("✏️ Enter your English text here:", height=200)
