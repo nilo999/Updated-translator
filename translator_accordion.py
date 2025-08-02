@@ -1,36 +1,11 @@
-
-
+import streamlit as st
 from deep_translator import GoogleTranslator
 import urllib.parse
 
-FLAGS = {'ES': '🇪🇸', 'FR': '🇫🇷🇧🇪', 'NL': '🇳🇱🇧🇪', 'IT': '🇮🇹'}
-LANG_CODES = {'ES': 'spanish', 'FR': 'french', 'NL': 'dutch', 'IT': 'italian'}
-NOTICE_EN = (
-    "machine translated. in case of doubt, please refer to the english version of this text, "
-    "or get in contact with the People Team."
-)
-
-def translate(text, lang_code):
-    # Preserve "People Team" during translation
-    protected = "People Team"
-    placeholder = "PEOPLETEAMPLACEHOLDER123"
-
-    # Replace for translation
-    safe_text = text.replace(protected, placeholder)
-    notice_text = NOTICE_EN.replace(protected, placeholder)
-
-    # Translate both
-    translated_main = GoogleTranslator(source='auto', target=lang_code).translate(safe_text)
-    translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(notice_text)
-
-    # Restore original
-    translated_main = translated_main.replace(placeholder, protected)
-    translated_notice = translated_notice.replace(placeholder, protected)
-
-    return translated_main + "\n\n*_" + translated_notice + "_*"
-
-
+# Set page config first
 st.set_page_config(page_title="🌍 4-Language Translator", layout="centered")
+
+# Centered logo
 st.markdown(
     """
     <div style="text-align: center;">
@@ -41,6 +16,40 @@ st.markdown(
 )
 
 st.title("🌍 4-Language Translator")
+
+FLAGS = {
+    'ES': '🇪🇸',
+    'FR': '🇫🇷🇧🇪🇨🇭',  # France + Belgium + Switzerland
+    'NL': '🇳🇱🇧🇪',
+    'IT': '🇮🇹🇨🇭'       # Italy + Switzerland
+}
+
+LANG_CODES = {
+    'ES': 'spanish',
+    'FR': 'french',
+    'NL': 'dutch',
+    'IT': 'italian'
+}
+
+NOTICE_EN = (
+    "machine translated. in case of doubt, please refer to the english version of this text, "
+    "or get in contact with the People Team."
+)
+
+def translate(text, lang_code):
+    protected = "People Team"
+    placeholder = "PEOPLETEAMPLACEHOLDER123"
+
+    safe_text = text.replace(protected, placeholder)
+    notice_text = NOTICE_EN.replace(protected, placeholder)
+
+    translated_main = GoogleTranslator(source='auto', target=lang_code).translate(safe_text)
+    translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(notice_text)
+
+    translated_main = translated_main.replace(placeholder, protected)
+    translated_notice = translated_notice.replace(placeholder, protected)
+
+    return translated_main + "\n\n*_" + translated_notice + "_*"
 
 input_text = st.text_area("✏️ Enter your English text here:", height=200)
 
@@ -56,7 +65,6 @@ if st.button("Translate"):
                 st.markdown(translated)
                 full_email_body += f"{lang} {FLAGS[lang]}\n{translated}\n\n"
 
-        # Email button
         subject = urllib.parse.quote("Multilingual Translation")
         body = urllib.parse.quote(full_email_body)
         mailto_link = f"mailto:?subject={subject}&body={body}"
