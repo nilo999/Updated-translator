@@ -29,7 +29,7 @@ LANG_CODES = {
     'IT': 'italian'
 }
 
-NOTICE_EN = "Translated by artificial intelligence. In case of doubt, please refer to the English version of this text, or get in contact with the People Team."
+NOTICE_EN = "Translated by artificial intelligence. In case of doubt, please refer to the English version of this text, or get in contact with the sender, or your local Business Partner."
 
 
 # --- Translation function ---
