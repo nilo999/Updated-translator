@@ -1,5 +1,14 @@
 
 import streamlit as st
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="https://raw.githubusercontent.com/nilo999/Updated-translator/main/DLLOGO.png" width="120">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 from deep_translator import GoogleTranslator
 import urllib.parse
 
@@ -31,6 +40,15 @@ def translate(text, lang_code):
 
 
 st.set_page_config(page_title="🌍 4-Language Translator", layout="centered")
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="https://raw.githubusercontent.com/nilo999/Updated-translator/main/DLLOGO.png" width="120">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("🌍 4-Language Translator")
 
 input_text = st.text_area("✏️ Enter your English text here:", height=200)
