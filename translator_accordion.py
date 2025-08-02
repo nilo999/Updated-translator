@@ -1,7 +1,15 @@
 import streamlit as st
 from deep_translator import GoogleTranslator
 import urllib.parse
-
+# Logo at the top, centered
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="https://raw.githubusercontent.com/nilo999/Updated-translator/main/DLLOGO.png" width="120">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 # Flags and language codes
 FLAGS = {
     'ES': '🇪🇸',
