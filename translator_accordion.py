@@ -38,10 +38,4 @@ def translate(text, lang_code):
 
     # Restore protected phrase
     translated_main = translated_main.replace(placeholder, protected)
-    translated_notice = translated_notice.replace(placeholder, protected)
-
-    # Return combined translation with italicized notice
-    return translated_main.strip() + "\n\n*_" + translated_notice.strip() + "_*"
-
-# Streamlit page config
-st
+    translated_notice = translated_notice.repl
