@@ -10,16 +10,24 @@ NOTICE_EN = (
 )
 
 def translate(text, lang_code):
-    placeholder = "<<<PEOPLE_TEAM>>>"
-    text = text.replace("People Team", placeholder)
-    translated_main = GoogleTranslator(source='auto', target=lang_code).translate(text)
-    translated_main = translated_main.replace(placeholder, "People Team")
+    # Preserve "People Team" during translation
+    protected = "People Team"
+    placeholder = "PEOPLETEAMPLACEHOLDER123"
 
-    notice_temp = NOTICE_EN.replace("People Team", placeholder)
-    translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(notice_temp)
-    translated_notice = translated_notice.replace(placeholder, "People Team")
+    # Replace for translation
+    safe_text = text.replace(protected, placeholder)
+    notice_text = NOTICE_EN.replace(protected, placeholder)
+
+    # Translate both
+    translated_main = GoogleTranslator(source='auto', target=lang_code).translate(safe_text)
+    translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(notice_text)
+
+    # Restore original
+    translated_main = translated_main.replace(placeholder, protected)
+    translated_notice = translated_notice.replace(placeholder, protected)
 
     return translated_main + "\n\n*_" + translated_notice + "_*"
+
 
 st.set_page_config(page_title="🌍 4-Language Translator", layout="centered")
 st.title("🌍 4-Language Translator")
