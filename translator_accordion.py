@@ -38,7 +38,7 @@ NOTICE_EN = (
 
 def translate(text, lang_code):
     protected = "People Team"
-    placeholder = "PEOPLETEAMPLACEHOLDER123"
+    placeholder = "PEOPLE TEAM"
 
     safe_text = text.replace(protected, placeholder)
     notice_text = NOTICE_EN.replace(protected, placeholder)
