@@ -38,18 +38,22 @@ NOTICE_EN = (
 
 def translate(text, lang_code):
     protected = "People Team"
-    placeholder = "PEOPLETEAM"
+    placeholder = "__¤¤¤PEOPLETEAM¤¤¤__"
 
+    # Replace protected term
     safe_text = text.replace(protected, placeholder)
     notice_text = NOTICE_EN.replace(protected, placeholder)
 
+    # Translate
     translated_main = GoogleTranslator(source='auto', target=lang_code).translate(safe_text)
     translated_notice = GoogleTranslator(source='auto', target=lang_code).translate(notice_text)
 
+    # Restore original protected term
     translated_main = translated_main.replace(placeholder, protected)
     translated_notice = translated_notice.replace(placeholder, protected)
 
     return translated_main + "\n\n*_" + translated_notice + "_*"
+
 
 input_text = st.text_area("✏️ Enter your English text here:", height=200)
 
