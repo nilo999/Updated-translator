@@ -32,7 +32,7 @@ LANG_CODES = {
 }
 
 NOTICE_EN = (
-    "machine translated. in case of doubt, please refer to the english version of this text, "
+    "*Translated by Artificial Intelligence. in case of doubt, please refer to the English version of this text, "
     "or get in contact with the People Team."
 )
 
