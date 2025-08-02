@@ -59,6 +59,7 @@ if st.button("Translate"):
     if input_text.strip() == "":
         st.warning("Please enter some English text above.")
     else:
+        original_notice = f"\n\n*_(Original text: {input_text.strip()})_*"
         full_email_body = ""
 
         for lang, lang_name in LANG_CODES.items():
